@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ApiSistemaLoginApplication {
 
 	public static void main(String[] args) {
-
+		//usando Dotenv para ler os dados do .Env
 		Dotenv dotenv = Dotenv.load();
 
 		System.setProperty("spring.datasource.url", dotenv.get("DB_URL"));
