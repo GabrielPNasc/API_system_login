@@ -2,8 +2,10 @@ package com.pires.api_sistemalogin.Controller;
 
 import com.pires.api_sistemalogin.Service.UserService;
 import com.pires.api_sistemalogin.model.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -24,9 +26,22 @@ public class UserController {
         return "/login.html";
     }
 
+
+    /////VER COM URGENCIA
     @GetMapping("/home")
-    public String home(){
-        return "/home.html";
+    public String home(HttpSession session, Model model) {
+
+        User user = (User) session.getAttribute("user");
+
+        if(user != null){
+            model.addAttribute("user", user);
+        }
+
+        return "home.html";
+    }
+    @GetMapping("/success")
+    public String Success(){
+        return "/loginsucces.html";
     }
 
     @GetMapping("/register")
@@ -50,7 +65,7 @@ public class UserController {
         boolean exists = service.verify_account(user);
         System.out.println(exists);
         if (exists) {
-            return "redirect:/home";
+            return "redirect:/success";
         } else {
             return "redirect:/login";
         }
